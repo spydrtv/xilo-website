@@ -1,0 +1,261 @@
+import '../models/track.dart';
+import '../models/artist.dart';
+import '../models/album.dart';
+
+class MusicRepository {
+  List<Artist> getArtists() => _artists;
+  List<Album> getAlbums() => _albums;
+  List<Track> getTracks() => _tracks;
+
+  Artist? getArtistById(String id) {
+    try {
+      return _artists.firstWhere((a) => a.id == id);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Album? getAlbumById(String id) {
+    try {
+      return _albums.firstWhere((a) => a.id == id);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Track? getTrackById(String id) {
+    try {
+      return _tracks.firstWhere((t) => t.id == id);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  List<Track> getTracksByArtist(String artistId) =>
+      _tracks.where((t) => t.artistId == artistId).toList();
+
+  List<Album> getAlbumsByArtist(String artistId) =>
+      _albums.where((a) => a.artistId == artistId).toList();
+
+  List<Track> getTracksByAlbum(String albumId) =>
+      _tracks.where((t) => t.albumId == albumId).toList();
+
+  List<String> getGenres() => [
+        'Electronic',
+        'Lo-Fi',
+        'Ambient',
+        'Hip-Hop',
+        'Indie Rock',
+        'Pop',
+        'R&B',
+        'Jazz',
+        'Classical',
+        'Synthwave',
+      ];
+
+  List<String> getMoods() => [
+        'Chill',
+        'Energetic',
+        'Melancholy',
+        'Uplifting',
+        'Focus',
+        'Dreamy',
+        'Dark',
+        'Romantic',
+      ];
+
+  List<int> getYears() {
+    final years = {
+      ..._tracks.map((t) => t.releaseYear),
+      ..._albums.map((a) => a.year),
+    }.toList();
+    years.sort((a, b) => b.compareTo(a));
+    return years;
+  }
+
+  static const _imgBase = 'https://picsum.photos/seed';
+
+  static final List<Artist> _artists = [
+    const Artist(
+      id: 'a1',
+      name: 'Neon Drift',
+      imageUrl: '$_imgBase/neondrift/400/400',
+      bio: 'Synthwave producer crafting retro-futuristic soundscapes.',
+      genres: ['Synthwave', 'Electronic'],
+      followerCount: 24500,
+      playCount: 82000,
+      uploadCount: 5,
+    ),
+    const Artist(
+      id: 'a2',
+      name: 'Lyra Moon',
+      imageUrl: '$_imgBase/lyramoon/400/400',
+      bio: 'AI-powered ambient composer exploring the boundaries of sound.',
+      isAiCreator: true,
+      genres: ['Ambient', 'Lo-Fi'],
+      followerCount: 18200,
+      playCount: 65000,
+      uploadCount: 3,
+    ),
+    const Artist(
+      id: 'a3',
+      name: 'Koda Beats',
+      imageUrl: '$_imgBase/kodabeats/400/400',
+      bio: 'Lo-fi hip-hop producer. Beats for studying and relaxation.',
+      genres: ['Lo-Fi', 'Hip-Hop'],
+      followerCount: 31000,
+      playCount: 110000,
+      uploadCount: 4,
+    ),
+    const Artist(
+      id: 'a4',
+      name: 'Echo Chamber',
+      imageUrl: '$_imgBase/echochamber/400/400',
+      bio: 'Indie rock trio from Portland. Raw, honest, electric.',
+      genres: ['Indie Rock', 'Pop'],
+      followerCount: 12800,
+      playCount: 44000,
+      uploadCount: 1,
+    ),
+    const Artist(
+      id: 'a5',
+      name: 'Solara',
+      imageUrl: '$_imgBase/solara/400/400',
+      bio: 'AI-human collaboration project. Blending neural nets with soul.',
+      isAiCreator: true,
+      genres: ['Pop', 'Electronic'],
+      followerCount: 45000,
+      playCount: 195000,
+      uploadCount: 4,
+    ),
+    const Artist(
+      id: 'a6',
+      name: 'Velvet Code',
+      imageUrl: '$_imgBase/velvetcode/400/400',
+      bio: 'R&B vocalist with a futuristic twist.',
+      genres: ['R&B', 'Pop'],
+      followerCount: 22300,
+      playCount: 73000,
+      uploadCount: 3,
+    ),
+    const Artist(
+      id: 'a7',
+      name: 'Glass Fauna',
+      imageUrl: '$_imgBase/glassfauna/400/400',
+      bio: 'Classical meets electronic. AI-generated orchestral pieces.',
+      isAiCreator: true,
+      genres: ['Classical', 'Ambient'],
+      followerCount: 9700,
+      playCount: 28000,
+      uploadCount: 2,
+    ),
+    const Artist(
+      id: 'a8',
+      name: 'Midnight Signal',
+      imageUrl: '$_imgBase/midsignal/400/400',
+      bio: 'Dark electronic beats from the underground.',
+      genres: ['Electronic', 'Synthwave'],
+      followerCount: 15600,
+      playCount: 51000,
+      uploadCount: 2,
+    ),
+  ];
+
+  static final List<Album> _albums = [
+    const Album(
+      id: 'al1',
+      title: 'Neon Highways',
+      artistId: 'a1',
+      artistName: 'Neon Drift',
+      artUrl: '$_imgBase/neonhighways/600/600',
+      type: AlbumType.album,
+      year: 2025,
+      genre: 'Synthwave',
+      trackIds: ['t1', 't2', 't3', 't4', 't5'],
+      credits: 'Produced by Neon Drift. Mixed at Retro Labs.',
+    ),
+    const Album(
+      id: 'al2',
+      title: 'Still Waters',
+      artistId: 'a2',
+      artistName: 'Lyra Moon',
+      artUrl: '$_imgBase/stillwaters/600/600',
+      type: AlbumType.ep,
+      year: 2026,
+      genre: 'Ambient',
+      trackIds: ['t6', 't7', 't8'],
+      credits: 'Generated by Lyra Moon AI. Curated by human collaborators.',
+    ),
+    const Album(
+      id: 'al3',
+      title: 'Late Night Tapes',
+      artistId: 'a3',
+      artistName: 'Koda Beats',
+      artUrl: '$_imgBase/latenighttapes/600/600',
+      type: AlbumType.album,
+      year: 2025,
+      genre: 'Lo-Fi',
+      trackIds: ['t9', 't10', 't11', 't12'],
+      credits: 'Produced by Koda Beats. Vinyl samples used with permission.',
+    ),
+    const Album(
+      id: 'al4',
+      title: 'Electric Hearts',
+      artistId: 'a4',
+      artistName: 'Echo Chamber',
+      artUrl: '$_imgBase/electrichearts/600/600',
+      type: AlbumType.single,
+      year: 2026,
+      genre: 'Indie Rock',
+      trackIds: ['t13'],
+      credits: 'Recorded live at The Attic Studio.',
+    ),
+    const Album(
+      id: 'al5',
+      title: 'Digital Soul',
+      artistId: 'a5',
+      artistName: 'Solara',
+      artUrl: '$_imgBase/digitalsoul/600/600',
+      type: AlbumType.album,
+      year: 2026,
+      genre: 'Pop',
+      trackIds: ['t14', 't15', 't16', 't17'],
+      credits: 'AI-human collaboration. Vocals by Solara Neural Voice v3.',
+    ),
+    const Album(
+      id: 'al6',
+      title: 'Satin Frequencies',
+      artistId: 'a6',
+      artistName: 'Velvet Code',
+      artUrl: '$_imgBase/satinfreq/600/600',
+      type: AlbumType.ep,
+      year: 2025,
+      genre: 'R&B',
+      trackIds: ['t18', 't19', 't20'],
+      credits: 'Written and performed by Velvet Code.',
+    ),
+  ];
+
+  static final List<Track> _tracks = [
+    const Track(id: 't1', title: 'Midnight Drive', artistId: 'a1', artistName: 'Neon Drift', albumId: 'al1', albumTitle: 'Neon Highways', artUrl: '$_imgBase/neonhighways/600/600', duration: Duration(minutes: 4, seconds: 12), genre: 'Synthwave', mood: 'Energetic', credits: 'Produced by Neon Drift', releaseYear: 2025),
+    const Track(id: 't2', title: 'Chrome Sunset', artistId: 'a1', artistName: 'Neon Drift', albumId: 'al1', albumTitle: 'Neon Highways', artUrl: '$_imgBase/neonhighways/600/600', duration: Duration(minutes: 3, seconds: 48), genre: 'Synthwave', mood: 'Dreamy', credits: 'Produced by Neon Drift', releaseYear: 2025),
+    const Track(id: 't3', title: 'Digital Rain', artistId: 'a1', artistName: 'Neon Drift', albumId: 'al1', albumTitle: 'Neon Highways', artUrl: '$_imgBase/neonhighways/600/600', duration: Duration(minutes: 5, seconds: 1), genre: 'Synthwave', mood: 'Dark', credits: 'Produced by Neon Drift', releaseYear: 2025),
+    const Track(id: 't4', title: 'Laser Grid', artistId: 'a1', artistName: 'Neon Drift', albumId: 'al1', albumTitle: 'Neon Highways', artUrl: '$_imgBase/neonhighways/600/600', duration: Duration(minutes: 3, seconds: 30), genre: 'Synthwave', mood: 'Energetic', credits: 'Produced by Neon Drift', releaseYear: 2025),
+    const Track(id: 't5', title: 'Retro Wave', artistId: 'a1', artistName: 'Neon Drift', albumId: 'al1', albumTitle: 'Neon Highways', artUrl: '$_imgBase/neonhighways/600/600', duration: Duration(minutes: 4, seconds: 44), genre: 'Synthwave', mood: 'Uplifting', credits: 'Produced by Neon Drift', releaseYear: 2025),
+    const Track(id: 't6', title: 'Quiet Depths', artistId: 'a2', artistName: 'Lyra Moon', albumId: 'al2', albumTitle: 'Still Waters', artUrl: '$_imgBase/stillwaters/600/600', duration: Duration(minutes: 6, seconds: 20), genre: 'Ambient', mood: 'Chill', isAiCreated: true, credits: 'AI-generated by Lyra Moon', releaseYear: 2026),
+    const Track(id: 't7', title: 'Morning Mist', artistId: 'a2', artistName: 'Lyra Moon', albumId: 'al2', albumTitle: 'Still Waters', artUrl: '$_imgBase/stillwaters/600/600', duration: Duration(minutes: 5, seconds: 15), genre: 'Ambient', mood: 'Dreamy', isAiCreated: true, credits: 'AI-generated by Lyra Moon', releaseYear: 2026),
+    const Track(id: 't8', title: 'Glass River', artistId: 'a2', artistName: 'Lyra Moon', albumId: 'al2', albumTitle: 'Still Waters', artUrl: '$_imgBase/stillwaters/600/600', duration: Duration(minutes: 7, seconds: 2), genre: 'Ambient', mood: 'Focus', isAiCreated: true, credits: 'AI-generated by Lyra Moon', releaseYear: 2026),
+    const Track(id: 't9', title: 'Rainy Window', artistId: 'a3', artistName: 'Koda Beats', albumId: 'al3', albumTitle: 'Late Night Tapes', artUrl: '$_imgBase/latenighttapes/600/600', duration: Duration(minutes: 2, seconds: 58), genre: 'Lo-Fi', mood: 'Chill', credits: 'Produced by Koda Beats', releaseYear: 2025),
+    const Track(id: 't10', title: 'Coffee Stain', artistId: 'a3', artistName: 'Koda Beats', albumId: 'al3', albumTitle: 'Late Night Tapes', artUrl: '$_imgBase/latenighttapes/600/600', duration: Duration(minutes: 3, seconds: 12), genre: 'Lo-Fi', mood: 'Focus', credits: 'Produced by Koda Beats', releaseYear: 2025),
+    const Track(id: 't11', title: 'Dusty Records', artistId: 'a3', artistName: 'Koda Beats', albumId: 'al3', albumTitle: 'Late Night Tapes', artUrl: '$_imgBase/latenighttapes/600/600', duration: Duration(minutes: 3, seconds: 45), genre: 'Lo-Fi', mood: 'Melancholy', credits: 'Produced by Koda Beats', releaseYear: 2025),
+    const Track(id: 't12', title: 'Warm Glow', artistId: 'a3', artistName: 'Koda Beats', albumId: 'al3', albumTitle: 'Late Night Tapes', artUrl: '$_imgBase/latenighttapes/600/600', duration: Duration(minutes: 2, seconds: 40), genre: 'Lo-Fi', mood: 'Romantic', credits: 'Produced by Koda Beats', releaseYear: 2025),
+    const Track(id: 't13', title: 'Electric Hearts', artistId: 'a4', artistName: 'Echo Chamber', albumId: 'al4', albumTitle: 'Electric Hearts', artUrl: '$_imgBase/electrichearts/600/600', duration: Duration(minutes: 3, seconds: 55), genre: 'Indie Rock', mood: 'Energetic', credits: 'Echo Chamber', releaseYear: 2026, isExplicit: true),
+    const Track(id: 't14', title: 'Binary Stars', artistId: 'a5', artistName: 'Solara', albumId: 'al5', albumTitle: 'Digital Soul', artUrl: '$_imgBase/digitalsoul/600/600', duration: Duration(minutes: 3, seconds: 28), genre: 'Pop', mood: 'Uplifting', isAiCreated: true, credits: 'AI-human collab by Solara', releaseYear: 2026),
+    const Track(id: 't15', title: 'Neural Love', artistId: 'a5', artistName: 'Solara', albumId: 'al5', albumTitle: 'Digital Soul', artUrl: '$_imgBase/digitalsoul/600/600', duration: Duration(minutes: 4, seconds: 2), genre: 'Pop', mood: 'Romantic', isAiCreated: true, credits: 'AI-human collab by Solara', releaseYear: 2026),
+    const Track(id: 't16', title: 'Pixel Dreams', artistId: 'a5', artistName: 'Solara', albumId: 'al5', albumTitle: 'Digital Soul', artUrl: '$_imgBase/digitalsoul/600/600', duration: Duration(minutes: 3, seconds: 15), genre: 'Electronic', mood: 'Dreamy', isAiCreated: true, credits: 'AI-human collab by Solara', releaseYear: 2026),
+    const Track(id: 't17', title: 'Code of Heart', artistId: 'a5', artistName: 'Solara', albumId: 'al5', albumTitle: 'Digital Soul', artUrl: '$_imgBase/digitalsoul/600/600', duration: Duration(minutes: 4, seconds: 38), genre: 'Pop', mood: 'Melancholy', isAiCreated: true, credits: 'AI-human collab by Solara', releaseYear: 2026, isExplicit: true),
+    const Track(id: 't18', title: 'Satin Touch', artistId: 'a6', artistName: 'Velvet Code', albumId: 'al6', albumTitle: 'Satin Frequencies', artUrl: '$_imgBase/satinfreq/600/600', duration: Duration(minutes: 3, seconds: 50), genre: 'R&B', mood: 'Romantic', credits: 'Velvet Code', releaseYear: 2025),
+    const Track(id: 't19', title: 'Afterglow', artistId: 'a6', artistName: 'Velvet Code', albumId: 'al6', albumTitle: 'Satin Frequencies', artUrl: '$_imgBase/satinfreq/600/600', duration: Duration(minutes: 4, seconds: 10), genre: 'R&B', mood: 'Chill', credits: 'Velvet Code', releaseYear: 2025),
+    const Track(id: 't20', title: 'Frequency', artistId: 'a6', artistName: 'Velvet Code', albumId: 'al6', albumTitle: 'Satin Frequencies', artUrl: '$_imgBase/satinfreq/600/600', duration: Duration(minutes: 3, seconds: 33), genre: 'R&B', mood: 'Energetic', credits: 'Velvet Code', releaseYear: 2025, isExplicit: true),
+  ];
+}
