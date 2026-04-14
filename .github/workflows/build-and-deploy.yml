@@ -8,7 +8,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -24,7 +23,7 @@ jobs:
       - name: Build web
         run: flutter build web --release
 
-      - - name: Deploy to Vercel
+      - name: Deploy to Vercel
         run: |
           npm install -g vercel
           vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
